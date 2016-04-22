@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">orch</string>
+    <string name="menu_ping_server">Ping server</string>
+</resources>

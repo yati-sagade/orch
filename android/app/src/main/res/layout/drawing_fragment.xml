@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<io.explog.orch.DrawingView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="0.8"
+    android:id="@+id/drawingview" />
+
+<LinearLayout
+    android:id="@+id/buttons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/undobutton"
+        android:src="@drawable/ic_undo_black_24dp"/>
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/donebutton"
+        android:src="@drawable/ic_done_black_24dp"/>
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/redobutton"
+        android:src="@drawable/ic_redo_black_24dp"/>
+
+</LinearLayout>
+
+</LinearLayout>
