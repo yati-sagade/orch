@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="orch_host"
+        android:title="@string/host"
+        android:summary="@string/host_pref_summary"
+        android:dialogTitle="@string/host" />
+
+    <EditTextPreference
+        android:key="orch_port"
+        android:title="@string/port"
+        android:summary="@string/port_pref_summary"
+        android:dialogTitle="@string/port"
+        android:defaultValue="4000" />
+
+</PreferenceScreen>

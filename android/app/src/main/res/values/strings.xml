@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">orch</string>
     <string name="menu_ping_server">Ping server</string>
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string name="host_pref_summary">IP address of your computer on the same network as this device</string>
+    <string name="port_pref_summary">Port on which the orch server is running (usually 4000)</string>
+    <string name="menu_settings">Settings</string>
 </resources>

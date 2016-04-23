@@ -4,4 +4,8 @@
     <item android:id="@+id/item_ping"
           android:title="@string/menu_ping_server"
           app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/item_settings"
+          android:title="@string/menu_settings"
+          app:showAsAction="never"/>
 </menu>
