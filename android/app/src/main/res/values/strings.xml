@@ -6,4 +6,5 @@
     <string name="host_pref_summary">IP address of your computer on the same network as this device</string>
     <string name="port_pref_summary">Port on which the orch server is running (usually 4000)</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_take_picture">Take Picture</string>
 </resources>

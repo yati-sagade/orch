@@ -8,8 +8,8 @@ orch
    ~/.emacs.d/vendor/).  Add the following to your `init.el` (or
    `.emacsrc`):
 
-       (add-to-list 'load-path "~/.emacs.d/vendor")
-       (autoload 'orch-toggle "orch" nil t)
+        (add-to-list 'load-path "~/.emacs.d/vendor")
+        (autoload 'orch-toggle "orch" nil t)
 
  - At this point (after possibly restarting Emacs), doing `M-x
    orch-toggle` will start the orch server on port 4000.

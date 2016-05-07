@@ -38,6 +38,7 @@
 
 (defun orch-start-server (port)
   (orch-stop-server)
+  (make-directory (orch-image-dir) 1)
   (setq orch-server
         (ws-start
          ;; The following list defines the two handlers for the two endpoints
@@ -103,7 +104,7 @@
 (defun orch-respond-text/plain (process status-code message)
   "Write an HTTP message to `process` with the given status code. The
    Content-type header is set to text/plain"
-  (ws-response-header process status-code '("Content-type" . "text/plain"))
+  (ws-response-header process status-code '("Content-type" . "text/plain; charset=utf-8"))
   (process-send-string process message))
 
 (defun orch-write-to-sha1-file (text &optional extn)
@@ -140,4 +141,3 @@
 (defun orch-insert-newline-after ()
   (move-end-of-line nil)
   (insert "\n"))
-

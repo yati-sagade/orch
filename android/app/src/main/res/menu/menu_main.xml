@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/item_take_picture"
+          android:title="@string/menu_take_picture"
+          app:showAsAction="always"/>
+
     <item android:id="@+id/item_ping"
           android:title="@string/menu_ping_server"
           app:showAsAction="ifRoom"/>
@@ -8,4 +13,5 @@
     <item android:id="@+id/item_settings"
           android:title="@string/menu_settings"
           app:showAsAction="never"/>
+
 </menu>

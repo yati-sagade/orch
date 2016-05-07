@@ -15,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.UUID;
 
 
 /**
@@ -144,16 +143,7 @@ public class DrawingView extends View {
     /// Given an SVG path, wraps it in <svg> markup, and saves it to the external storage in
     /// a randomly generated filename, and returns the File object representing the written file.
     private File writeSVGToFile(String path, int width, int height) {
-        File dir =  getContext().getExternalFilesDir(null);
-        if (!dir.exists()) { dir.mkdirs(); }
-
-        int numfiles = dir.listFiles().length;
-        Util.logi("There are " + numfiles + " files in " + dir.toString());
-
-
-        // dir.mkdirs();
-        String filename = UUID.randomUUID().toString() + ".svg";
-        File file = new File(dir, filename);
+        File file = Util.mkFile(getContext(), "svg");
 
         StringBuilder builder = new StringBuilder();
 
