@@ -209,7 +209,12 @@ public class DrawingView extends View {
     }
 
     private void sendDrawing(final String path, int width, int height) {
-        File file = writeSVGToFile(path, width, height);
+        File file = null;
+        try {
+            file = writeSVGToFile(path, width, height);
+        } catch (IOException ioe) {
+            Toast.makeText(getContext(), ioe.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         if (file == null) {
             Util.loge("It seems the SVG file was not written.");
             return;
@@ -219,7 +224,7 @@ public class DrawingView extends View {
 
     /// Given an SVG path, wraps it in <svg> markup, and saves it to the external storage in
     /// a randomly generated filename, and returns the File object representing the written file.
-    private File writeSVGToFile(String path, int width, int height) {
+    private File writeSVGToFile(String path, int width, int height) throws IOException {
         File file = Util.mkFile(getContext(), "svg");
 
         StringBuilder builder = new StringBuilder();
@@ -242,13 +247,13 @@ public class DrawingView extends View {
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return null;
+            throw e;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return null;
+            throw e;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            throw e;
         }
 
         return file;
