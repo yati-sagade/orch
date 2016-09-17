@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -15,6 +16,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
 
 /**
@@ -23,9 +28,14 @@ import java.io.UnsupportedEncodingException;
 public class DrawingView extends View {
     private Path mDrawPath;
     private Paint mDrawPaint;
+
+    // TODO: Allow choosing colors.
     private int mPaintColor = 0xff660000;
+
+    // Pixel density: Used to translate pixels to device independent units.
     private double mDensity;
 
+    // Network IO
     private OrchClient mClient;
 
     // Used to determine the width and height attributes of the resulting SVG markup
@@ -34,7 +44,14 @@ public class DrawingView extends View {
 
 
     // Stores the SVG path commands in sync with what mDrawPath contains.
-    private StringBuilder mPathBuffer = new StringBuilder();
+    private List<PointF> mPathFragment = new ArrayList<>();
+
+    // Undo stack
+    private Deque<List<PointF>> mUndoneFragments = new ArrayDeque<>();
+    private Deque<Path>  mUndonePaths = new ArrayDeque<>();
+    private Deque<List<PointF>> mPathFragments = new ArrayDeque<>();
+
+    private Deque<Path> mPaths = new ArrayDeque<>();
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -45,17 +62,68 @@ public class DrawingView extends View {
     }
 
     public void undo() {
-        blankOut();
+        if (!mPathFragments.isEmpty()) {
+            mUndoneFragments.addLast(mPathFragments.removeLast());
+            mUndonePaths.addLast(mPaths.removeLast());
+            invalidate();
+        } else {
+            Toast.makeText(getContext(), "Undo not possible", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void redo() {
-        Toast.makeText(getContext(), "redo is not implemented yet!", Toast.LENGTH_SHORT).show();
+        if (!mUndoneFragments.isEmpty()) {
+            mPathFragments.addLast(mUndoneFragments.removeLast());
+            mPaths.addLast(mUndonePaths.removeLast());
+            invalidate();
+        } else {
+            Toast.makeText(getContext(), "Redo not possible", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void done() {
-        final String path = mPathBuffer.toString().trim();
+        //final String path = mPathFragment.toString().trim();
+        final String path = makeSVGPathFromFragments(mPathFragments);
+
+        mPathFragments.clear();
+        mPaths.clear();
+
+        mUndoneFragments.clear();
+        mUndonePaths.clear();
+
         sendDrawing(path, maxX, maxY);
         blankOut();
+    }
+
+    private String makeSVGPathFromFragments(Iterable<List<PointF>> fragments) {
+        StringBuilder stringBuilder = new StringBuilder();
+        maxX = 0;
+        maxY = 0;
+        for (Iterable<PointF> fragment : fragments) {
+            boolean first = true;
+            for (PointF point : fragment) {
+                float touchX = point.x, touchY = point.y;
+                int   dpX = pxToDp(touchX), dpY = pxToDp(touchY);
+
+                if (dpX > maxX) {
+                    maxX = dpX;
+                }
+
+                if (dpY > maxY) {
+                    maxY = dpY;
+                }
+
+                // Each fragment is a set of connected line segments, but we first need to move to
+                // the first point in the fragment without drawing.
+                if (first) {
+                    stringBuilder.append(' ').append("M").append(' ').append(dpX).append(' ').append(dpY);
+                    first = false;
+                } else {
+                    stringBuilder.append(' ').append("L").append(' ').append(dpX).append(' ').append(dpY);
+                }
+            }
+        }
+        return stringBuilder.toString();
     }
 
     @Override
@@ -65,6 +133,9 @@ public class DrawingView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        for (Path path : mPaths) {
+            canvas.drawPath(path, mDrawPaint);
+        }
         canvas.drawPath(mDrawPath, mDrawPaint);
     }
 
@@ -84,20 +155,27 @@ public class DrawingView extends View {
             maxY = dpY;
         }
 
-        boolean resetPath = false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mDrawPath.moveTo(touchX, touchY);
-                mPathBuffer.append(' ').append("M").append(' ').append(dpX).append(' ').append(dpY);
+                mPathFragment.add(new PointF(touchX, touchY));
                 break;
             case MotionEvent.ACTION_MOVE:
                 mDrawPath.lineTo(touchX, touchY);
-                mPathBuffer.append(' ').append("L").append(' ').append(dpX).append(' ').append(dpY);
+                mPathFragment.add(new PointF(touchX, touchY));
                 break;
             case MotionEvent.ACTION_UP:
                 mDrawPath.lineTo(touchX, touchY);
-                mPathBuffer.append(' ').append("L").append(' ').append(dpX).append(' ').append(dpY);
-                resetPath = true;
+                mPathFragment.add(new PointF(touchX, touchY));
+
+                // Add fragment so it can be undone.
+                mPathFragments.add(mPathFragment);
+                mPathFragment = new ArrayList<>();
+
+                // Add path to the list of paths to be drawn, and reinit the current path obj.
+                mPaths.add(mDrawPath);
+                mDrawPath = new Path();
+
                 break;
             default:
                 return false;
@@ -127,7 +205,6 @@ public class DrawingView extends View {
         maxX = 0;
         maxY = 0;
         mDrawPath.reset();
-        mPathBuffer.setLength(0);
         invalidate();
     }
 
@@ -205,4 +282,5 @@ public class DrawingView extends View {
         }
         return file;
     }
+
 }
