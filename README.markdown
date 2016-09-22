@@ -18,15 +18,16 @@ orch
   
 
 - Android
- - Build the Android app in `android/` in Android Studio.
- - Install the app on your phone.
- - Start the app and fill type the IP address of your computer on
-   which Emacs is running (the computer and the phone should be
-   on the same network -- I'm working on making it work via the
-   cloud).
- - Hit the back button and test the connection by tapping "PING SERVER"
-   on the action bar. If all is well, you should see a message saying
-   "pong".
+
+ You can either install the app from the Play Store (https://play.google.com/store/apps/details?id=io.explog.orch) or build it yourself in Android Studio (import the `android/` directory as a project in AS).
+ 
+    - Start the app and fill type the IP address of your computer on
+    which Emacs is running (the computer and the phone should be
+    on the same network -- I'm working on making it work via the
+    cloud).
+    - Hit the back button and test the connection by tapping "PING SERVER"
+    on the action bar. If all is well, you should see a message saying
+    "pong".
  
 ### Using
 
