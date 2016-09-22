@@ -22,27 +22,45 @@ buffer. Current requirements:
  - At this point (after possibly restarting Emacs), doing `M-x
    orch-toggle` will start the orch server on port 4000 (Change the port if you
    want in `orch.el`, grep for 4000).
+
+   ![Image showing Emacs after orch-toggle
+   command](screenshots/orchserver-started.png)
   
- - Open a file in org-mode.
+ - Open a buffer in org-mode, if you haven't already (or just `M-x org-mode` in
+   the current buffer).
 
 - Android
 
- You can either install the app from the Play Store (https://play.google.com/store/apps/details?id=io.explog.orch) or build it yourself in Android Studio (import the `android/` directory as a project in AS).
+ You can either install the app from the Play Store
+ (https://play.google.com/store/apps/details?id=io.explog.orch) or build it
+ yourself in Android Studio (import the `android/` directory as a project in
+ AS).
  
-    - Start the app and fill type the IP address of your computer on
-    which Emacs is running (the computer and the phone should be
-    on the same network -- I'm working on making it work via the
-    cloud).
+    - Start the app, open settings, and fill in the IP address of your computer
+      on which Emacs is running (the computer and the phone should be on the
+      same network -- I'm working on making it work "via the cloud").
     - Hit the back button and test the connection by tapping "PING SERVER"
     on the action bar. If all is well, you should see a message saying
     "pong".
+
+![Image showing an Android toast with PONG as the
+text](screenshots/android-pong.png)
  
 ### Using
 
-Draw figures on the Android app and hit the OK button. The emacs org
-mode buffer should now have a link to an image in it. To see the image
-inline, do `C-c C-x C-v` -- this toggles the inline image view in org
-mode.
+Draw something on the Android app and hit the OK (✓) button.
 
-The images land in ~/Pictures/orch/ (change this by editing `orch.el`).
+![Image showing a figure in Orch](screenshots/android-figure.png)
+
+The emacs org mode buffer should now have a link to an image in it.
+
+![Image highlighting a local image link in Emacs](screenshots/link-shown.png)
+
+To see the image inline, do `C-c C-x C-v` -- this toggles the inline image view
+in org mode.
+
+![Image showing a picture in inline-mode in an org buffer in
+Emacs](screenshots/picture-shown.png)
+
+By default, the images land in ~/Pictures/orch/ (change this by editing `orch.el`).
 
