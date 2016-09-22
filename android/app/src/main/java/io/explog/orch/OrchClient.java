@@ -47,7 +47,7 @@ public class OrchClient {
         @Override
         protected void onPostExecute(Result result) {
             if (result == null) {
-                Toast.makeText(mContext, "Could not ping server, please check your settings", Toast.LENGTH_LONG);
+                Toast.makeText(mContext.getApplicationContext(), "Could not ping server, please check your settings", Toast.LENGTH_LONG);
                 return;
             }
             String content = result.content;

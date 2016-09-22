@@ -30,7 +30,7 @@ public class DrawingView extends View {
     private Paint mDrawPaint;
 
     // TODO: Allow choosing colors.
-    private int mPaintColor = 0xff660000;
+    private int mPaintColor = 0xff000000; // This is aRGB.
 
     // Pixel density: Used to translate pixels to device independent units.
     private double mDensity;
@@ -81,18 +81,19 @@ public class DrawingView extends View {
         }
     }
 
+    public void clear() {
+        mPathFragments.clear();
+        mPaths.clear();
+        mUndoneFragments.clear();
+        mUndonePaths.clear();
+        blankOut();
+    }
+
     public void done() {
         //final String path = mPathFragment.toString().trim();
         final String path = makeSVGPathFromFragments(mPathFragments);
-
-        mPathFragments.clear();
-        mPaths.clear();
-
-        mUndoneFragments.clear();
-        mUndonePaths.clear();
-
         sendDrawing(path, maxX, maxY);
-        blankOut();
+        clear();
     }
 
     private String makeSVGPathFromFragments(Iterable<List<PointF>> fragments) {
@@ -157,6 +158,7 @@ public class DrawingView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                mUndoneFragments.clear();
                 mDrawPath.moveTo(touchX, touchY);
                 mPathFragment.add(new PointF(touchX, touchY));
                 break;

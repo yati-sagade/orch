@@ -1,5 +1,13 @@
 orch
 =====
+Send scribbles and pictures from your Android phone to your Emacs org-mode
+buffer. Current requirements:
+
+- The computer running emacs and the phone running orch be on the same
+  network. I'm working on a simple middleman server that both the app and emacs
+  can talk to.
+
+- emacs 24.3+
 
 #### Setup
 
@@ -12,10 +20,10 @@ orch
         (autoload 'orch-toggle "orch" nil t)
 
  - At this point (after possibly restarting Emacs), doing `M-x
-   orch-toggle` will start the orch server on port 4000.
+   orch-toggle` will start the orch server on port 4000 (Change the port if you
+   want in `orch.el`, grep for 4000).
   
  - Open a file in org-mode.
-  
 
 - Android
 
@@ -35,4 +43,6 @@ Draw figures on the Android app and hit the OK button. The emacs org
 mode buffer should now have a link to an image in it. To see the image
 inline, do `C-c C-x C-v` -- this toggles the inline image view in org
 mode.
+
+The images land in ~/Pictures/orch/ (change this by editing `orch.el`).
 
