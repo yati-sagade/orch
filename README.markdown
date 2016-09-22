@@ -43,14 +43,15 @@ buffer. Current requirements:
     on the action bar. If all is well, you should see a message saying
     "pong".
 
-![Image showing an Android toast with PONG as the
-text](screenshots/android-pong.png)
+  <br/>
+  <img alt="Image showing an Android toast with PONG as the text" width="200" height="355" src="screenshots/android-pong.png" />
  
 ### Using
 
 Draw something on the Android app and hit the OK (✓) button.
 
-![Image showing a figure in Orch](screenshots/android-figure.png)
+<br/>
+ <img alt="Image showing a figure in Orch" width="200" height="355" src="screenshots/android-figure.png" />
 
 The emacs org mode buffer should now have a link to an image in it.
 
