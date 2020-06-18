@@ -24,7 +24,7 @@ buffer. Current requirements:
    want in `orch.el`, grep for 4000).
 
    ![Image showing Emacs after orch-toggle
-   command](screenshots/orchserver-started.png)
+   command](screenshots/orch-server-started.png)
   
  - Open a buffer in org-mode, if you haven't already (or just `M-x org-mode` in
    the current buffer).
