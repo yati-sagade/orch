@@ -1,0 +1,29 @@
+Categories:
+  - Writing
+License: MIT
+SourceCode: https://github.com/yati-sagade/orch
+
+AutoName: orch
+Summary: Send scribbles from an Android phone to Emacs Org Mode files
+Description: |-
+    This app allows you to draw/take pictures on your Android phone and send it
+    to an Emacs Org Mode buffer. One time setup for emacs is required, and your
+    computer running emacs and the phone running the app must be on the same
+    network (e.g., connected to the same home WiFi).
+
+RepoType: git
+Repo: https://github.com/yati-sagade/orch
+
+Builds:
+  - versionName: '1.0'
+    versionCode: 1
+    commit: v1.0
+    subdir: android
+    gradle:
+      - yes
+    output: app/build/outputs/apk/app-release-unsigned.apk
+
+AutoUpdateMode: Version %v
+UpdateCheckMode: Tags
+CurrentVersion: '0.1'
+CurrentVersionCode: 1

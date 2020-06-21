@@ -6,3 +6,7 @@
 .DS_Store
 /build
 /captures
+/tmp
+/.idea/
+/logs/
+
